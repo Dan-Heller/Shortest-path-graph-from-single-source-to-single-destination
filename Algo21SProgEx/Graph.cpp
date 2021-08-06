@@ -188,6 +188,51 @@ void Graph::removeEdges(int* d)
 				ptr = ptr->next;
 				RemoveEdge(i + 1, tempData);
 			}
+			else
+			{
+				ptr = ptr->next;
+			}
 		}
+	}
+}
+
+Graph* Graph::getGraphTranspose()
+{
+	Graph* Gst = new Graph();
+	Gst->MakeEmptyGraph(numOfVertex);
+
+
+	Node* ptr;
+	for (int i = 0; i < numOfVertex; i++)
+	{
+		ptr = vertexArray[i].next;
+		while (ptr != nullptr)
+		{
+			Gst->AddEdge(ptr->Data, i + 1);
+			ptr = ptr->next;
+		}
+	}
+
+	return Gst;
+}
+
+void Graph::removeUnreachableEdges(int* d)//delete all edges of infinite vertex
+{
+	
+	Node* ptr, *tempNode;
+	for (int i = 0; i < numOfVertex; i++)
+	{
+		if(d[i] == INT_MAX)
+		{
+			ptr = vertexArray[i].next;
+			while (ptr != nullptr)
+			{
+				tempNode = ptr->next;
+				RemoveEdge(i + 1, ptr->Data);
+				ptr = tempNode;
+			}
+			vertexArray[i].next = nullptr;
+		}
+		
 	}
 }

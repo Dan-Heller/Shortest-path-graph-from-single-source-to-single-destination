@@ -23,6 +23,8 @@ public:
 	void PrintGraph();
 	int getNumOfVertex();
 	void removeEdges(int* d);
+	Graph* getGraphTranspose();
+	void removeUnreachableEdges(int* d);
 	
 
 	

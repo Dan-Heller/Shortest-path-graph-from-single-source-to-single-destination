@@ -4,7 +4,7 @@
 #include "Graph.h"
 
 
-int* BFS(Graph G, int s)
+int* BFS(Graph& G, int s)
 {
 	int numOfVertex = G.getNumOfVertex();
 	int* d = new int[numOfVertex];
@@ -47,13 +47,16 @@ int main()
 	Graph G;
 	G.MakeEmptyGraph(numOfVertex);
 	G.ReadGraph();
-	G.PrintGraph();
-	int* d = BFS(G, s);
+	//G.PrintGraph();
+	int* d = BFS(G, s); // à
+	G.removeEdges(d); // á
+	Graph* Gst = G.getGraphTranspose(); //â
+
+	delete d;
+	d = BFS(*Gst, t); // ã
+	Gst->removeUnreachableEdges(d); // ã
+
+	Graph* H = Gst->getGraphTranspose(); // ä
 	
-	
-
-
-
-
-	
+	H->PrintGraph();
 }
