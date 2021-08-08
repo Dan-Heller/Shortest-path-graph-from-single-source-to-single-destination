@@ -127,18 +127,16 @@ int Graph::ReadGraph()
 	bool vertexFlag = true;  // true than its u turn 
 	int tempchar;
 
-	cin >> tempchar;
-	while(tempchar != cin.eof())
+	
+	while(!cin.eof())
 	{
 		if (vertexFlag)
 		{
-			u = tempchar;
-			
+			cin >> u;
 		}
 		else
 		{
-			 v = tempchar;
-			
+			cin >> v;
 			result = AddEdge(u, v); //add edge
 			if(!result)
 			{
@@ -146,16 +144,15 @@ int Graph::ReadGraph()
 			}
 		}
 		vertexFlag = !vertexFlag;
-		cin >> tempchar;
 		//cin.ignore();
 	}
 	//cin.ignore();
-
-	if(!vertexFlag) // v not inserted
-	{
-		cout << "error";
-		exit(1);
-	}
+	
+	//if(!vertexFlag) // v not inserted
+	//{
+	//	cout << "invalid input3";
+	//	exit(1);
+	//}
 
 	return result;
 }

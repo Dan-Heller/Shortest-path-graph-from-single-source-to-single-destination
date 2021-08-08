@@ -34,7 +34,6 @@ int* BFS(Graph& G, int s)
 			ptr = ptr->next;
 		}
 	}
-
 	return d;
 }
 
@@ -43,14 +42,12 @@ Graph*  ShortestPathGraphFromSingleSourceToSingleDestination(Graph& G, int s, in
 	int* d = BFS(G, s);
 	G.removeEdges(d);
 	Graph* Gst = G.getGraphTranspose();
-	delete d;
+	delete[] d;
 	d = BFS(*Gst, t); // ã
 	Gst->removeUnreachableEdges(d); // ã
 	Graph* H = Gst->getGraphTranspose(); // ä
 
 	delete[] d;
-	
-	
 	return H;
 }
 
@@ -65,7 +62,22 @@ void GetFirstInputFromUser(int& numOfVertex,int& s,int& t)
 	}
 }
 
+void MeasureTimeAndPrintToStdout(Graph& G, int s, int t)
+{
 
+	auto start = chrono::high_resolution_clock::now();   // unsync the I/O of C and C++.
+	ios_base::sync_with_stdio(false);
+	Graph* H = ShortestPathGraphFromSingleSourceToSingleDestination(G, s, t);
+	H->PrintGraph();// Here you put the name of the function you wish to measure
+	auto end = chrono::high_resolution_clock::now();   // Calculating total time taken by the program.
+	double time_taken =   chrono::duration_cast<chrono::nanoseconds>(end - start).count();  
+	time_taken *= 1e-9;   
+	cout << "Time taken by function ShortestPathGraphFromSingleSourceToSingleDestination is : " << fixed << time_taken << setprecision(9) << " sec" << endl; 
+	delete H;
+
+
+	
+}
 
 
 int main()
@@ -82,21 +94,11 @@ int main()
 		exit(1);
 	}
 
-	Graph* H = ShortestPathGraphFromSingleSourceToSingleDestination(G, s, t);
-	
-	H->PrintGraph();
+	MeasureTimeAndPrintToStdout(G, s, t);
 }
 
 
 
 
 
-//G.PrintGraph();
-	//int* d = BFS(G, s); // à
-	//G.removeEdges(d); // á
-	//Graph* Gst = G.getGraphTranspose(); //â
-	//delete d;
-	//d = BFS(*Gst, t); // ã
-	//Gst->removeUnreachableEdges(d); // ã
-	//Graph* H = Gst->getGraphTranspose(); // ä
-	//H->PrintGraph();
+
