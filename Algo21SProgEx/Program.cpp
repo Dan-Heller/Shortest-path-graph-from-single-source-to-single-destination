@@ -38,25 +38,65 @@ int* BFS(Graph& G, int s)
 	return d;
 }
 
+Graph*  ShortestPathGraphFromSingleSourceToSingleDestination(Graph& G, int s, int t)
+{
+	int* d = BFS(G, s);
+	G.removeEdges(d);
+	Graph* Gst = G.getGraphTranspose();
+	delete d;
+	d = BFS(*Gst, t); // ã
+	Gst->removeUnreachableEdges(d); // ã
+	Graph* H = Gst->getGraphTranspose(); // ä
+
+	delete[] d;
+	
+	
+	return H;
+}
+
+void GetFirstInputFromUser(int& numOfVertex,int& s,int& t)
+{
+	cin >> numOfVertex >> s >> t;
+
+	if(numOfVertex < 1 || s < 1 || t < 1 || s > numOfVertex || t > numOfVertex)
+	{
+		cout << "invalid input";
+		exit(1);
+	}
+}
+
+
 
 
 int main()
 {
 	int numOfVertex, s, t;
-	cin >> numOfVertex >> s >> t;
+	GetFirstInputFromUser(numOfVertex, s, t);
+
 	Graph G;
 	G.MakeEmptyGraph(numOfVertex);
-	G.ReadGraph();
-	//G.PrintGraph();
-	int* d = BFS(G, s); // à
-	G.removeEdges(d); // á
-	Graph* Gst = G.getGraphTranspose(); //â
+	int ReadSucceeded =  G.ReadGraph();
+	if(!ReadSucceeded)
+	{
+		cout << "invalid input";
+		exit(1);
+	}
 
-	delete d;
-	d = BFS(*Gst, t); // ã
-	Gst->removeUnreachableEdges(d); // ã
-
-	Graph* H = Gst->getGraphTranspose(); // ä
+	Graph* H = ShortestPathGraphFromSingleSourceToSingleDestination(G, s, t);
 	
 	H->PrintGraph();
 }
+
+
+
+
+
+//G.PrintGraph();
+	//int* d = BFS(G, s); // à
+	//G.removeEdges(d); // á
+	//Graph* Gst = G.getGraphTranspose(); //â
+	//delete d;
+	//d = BFS(*Gst, t); // ã
+	//Gst->removeUnreachableEdges(d); // ã
+	//Graph* H = Gst->getGraphTranspose(); // ä
+	//H->PrintGraph();

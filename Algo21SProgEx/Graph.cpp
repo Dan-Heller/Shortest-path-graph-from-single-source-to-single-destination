@@ -91,14 +91,15 @@ int Graph::RemoveEdge(int u, int v)
 {
 	int result = 0;
 
-	if (u > numOfVertex || v > numOfVertex || u < 1 || v < 1) //check correctness of range
+	if (u > numOfVertex || v > numOfVertex || u < 1 || v < 1 || vertexArray[u - 1].next==nullptr) //check correctness of range and that u has edges at all.
 	{
 		return result;
 	}
 
-	Node* ptr = vertexArray[u - 1].next;//check that edge does not exist in the graph
+	
+	Node* ptr = &vertexArray[u - 1];
 	Node* temp;
-	while (ptr != nullptr)
+	while (ptr->next != nullptr)
 	{
 		if (ptr->next->Data == v)
 		{
@@ -124,32 +125,37 @@ int Graph::ReadGraph()
 	int result = 1;
 	int u, v;
 	bool vertexFlag = true;  // true than its u turn 
-	char tempchar;
-	
-	while(!cin.eof())
+	int tempchar;
+
+	cin >> tempchar;
+	while(tempchar != cin.eof())
 	{
 		if (vertexFlag)
 		{
-			cin >> u;
+			u = tempchar;
 			
 		}
 		else
 		{
-			cin >> v;
-			//add keshet
-			result = AddEdge(u, v);
+			 v = tempchar;
 			
+			result = AddEdge(u, v); //add edge
+			if(!result)
+			{
+				return result;
+			}
 		}
 		vertexFlag = !vertexFlag;
+		cin >> tempchar;
 		//cin.ignore();
 	}
 	//cin.ignore();
 
-	//if(!vertexFlag) // v not inserted
-	//{
-	//	cout << "error";
-	//	exit(1);
-	//}
+	if(!vertexFlag) // v not inserted
+	{
+		cout << "error";
+		exit(1);
+	}
 
 	return result;
 }
