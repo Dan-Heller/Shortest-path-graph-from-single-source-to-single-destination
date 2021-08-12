@@ -1,8 +1,13 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "Program.h"
-#include "Graph.h"
 
+//The program reads a graph from the user, and two vertices that represents the beginning and ending of directed
+//path in the graph.
+//The program create a new graph that represent all the Shortest Paths from the beginning vertex to the ending of path vertex.
+// input: The user writes to the console the number of vertices, index of start and ending of a path, and than
+// all the edges of the graph by writing the source vertex and the destination vertex.
+//to end the input write CONTROL+Z (^Z) in a new line and press enter. 
 
 int* BFS(Graph& G, int s)
 {

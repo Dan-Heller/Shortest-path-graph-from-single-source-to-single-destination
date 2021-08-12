@@ -1,5 +1,5 @@
 #pragma once
-
+//implamantation of generic Queue used for the bfs.
 struct Node
 {
 	int Data;
@@ -20,7 +20,7 @@ public:
 	
 	
 	
-	void MakeEmpty()
+	void MakeEmpty() 
 	{
 		while (head != nullptr)
 		{

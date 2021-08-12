@@ -125,35 +125,28 @@ int Graph::ReadGraph()
 	int result = 1;
 	int u, v;
 	bool vertexFlag = true;  // true than its u turn 
-	int tempchar;
-
 	
-	while(!cin.eof())
+
+	while (!cin.eof())
 	{
-		if (vertexFlag)
+		if (cin >> u)
 		{
-			cin >> u;
-		}
-		else
-		{
-			cin >> v;
-			result = AddEdge(u, v); //add edge
-			if(!result)
+			if (!(cin >> v))
 			{
-				return result;
+				cout << "invalid input";
+				exit(1);
+			}
+			else
+			{
+				result = AddEdge(u, v); //add edge
+				if (!result)
+				{
+					return result;
+				}
 			}
 		}
-		vertexFlag = !vertexFlag;
-		//cin.ignore();
 	}
-	//cin.ignore();
 	
-	//if(!vertexFlag) // v not inserted
-	//{
-	//	cout << "invalid input3";
-	//	exit(1);
-	//}
-
 	return result;
 }
 
